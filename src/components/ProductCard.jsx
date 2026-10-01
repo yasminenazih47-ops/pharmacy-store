@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import { usePrefs } from '../context/Prefs.jsx';
 import { useCart } from '../context/Cart.jsx';
 
+const BASE = import.meta.env.BASE_URL;
+const fix = (s) => (typeof s === 'string' && s.startsWith('/img/') ? BASE + s.slice(1) : s);
+
 export const Img = ({ src, alt, className }) => (
-  <img src={src} alt={alt} className={className} loading="lazy" onError={(e) => { e.currentTarget.src = '/img/default.svg'; }} />
+  <img src={fix(src)} alt={alt} className={className} loading="lazy" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = BASE + 'img/default.svg'; }} />
 );
 
 export default function ProductCard({ p }) {
